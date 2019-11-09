@@ -22,5 +22,19 @@ namespace SistemaGeonet.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<SistemaGeonet.Models.Carrito> Carrito { get; set; }
+
+        public DbSet<SistemaGeonet.Models.Categoria> Categoria { get; set; }
+
+        public DbSet<SistemaGeonet.Models.DetalleCarrito> DetalleCarrito { get; set; }
+
+        public DbSet<SistemaGeonet.Models.Inventario> Inventario { get; set; }
+
+        public DbSet<SistemaGeonet.Models.Equipo> Equipo { get; set; }
+
+        public DbSet<SistemaGeonet.Models.OrdenPedido> OrdenPedido { get; set; }
+
+        public DbSet<SistemaGeonet.Models.Proveedor> Proveedor { get; set; }
     }
 }
