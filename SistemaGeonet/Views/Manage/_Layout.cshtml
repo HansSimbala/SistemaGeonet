@@ -1,23 +1,44 @@
-﻿@{ 
+﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
+<head>
 
-<h2>Manage your account</h2>
-
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            @await Html.PartialAsync("_ManageNav")
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+    <link rel="stylesheet" href="~/css/account.css">
+</head>
+<div class="contenedor-menu">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 nav-usser">
+                <button class="navbar-toggler btnClose" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+                <p class="tituloa">Mi cuenta</p>
+                @await Html.PartialAsync("_ManageNav")
+            </div>
+            <div class="col-md-10 d-flex align-items-center justify-content-center " >
+                @RenderBody()
+            </div>
         </div>
     </div>
 </div>
 
+@*<h2>Manage your account</h2>
+
+    <div>
+        <h4>Change your account settings</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                @await Html.PartialAsync("_ManageNav")
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>*@
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<script src="~/js/account.js"></script>
 @section Scripts {
     @RenderSection("Scripts", required: false)
 }
-        
+

@@ -15,7 +15,7 @@ namespace SistemaGeonet.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Campo Requerido")]
-        [StringLength(20, ErrorMessage = "Minimo 6 carácteres - Máximo 20 carácteres.", MinimumLength = 6)]
+        [StringLength(20, ErrorMessage = "Contraseña Minimo 6 carácteres - Máximo 20 carácteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -27,11 +27,11 @@ namespace SistemaGeonet.Models.AccountViewModels
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Campo Requerido")]
-        [StringLength(20, ErrorMessage = "Minimo 3 carácteres - Máximo 20 carácteres.", MinimumLength = 3)]
+        [StringLength(20, ErrorMessage = "Nombres Minimo 3 carácteres - Máximo 20 carácteres.", MinimumLength = 3)]
         public string Nombres { get; set; }
 
         [Required(ErrorMessage = "Campo Requerido")]
-        [StringLength(20, ErrorMessage = "Minimo 3 carácteres - Máximo 20 carácteres.", MinimumLength = 3)]
+        [StringLength(20, ErrorMessage = "Apellido Minimo 3 carácteres - Máximo 20 carácteres.", MinimumLength = 3)]
 
         public string ApellidoMaterno { get; set; }
 

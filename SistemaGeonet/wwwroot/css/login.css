@@ -1,8 +1,8 @@
   @import url('https://fonts.googleapis.com/css?family=Mukta');
 
-  body {
-      font-family: 'Mukta', sans-serif;
-  }
+body {
+    font-family: 'Mukta', sans-serif !important;
+}
 
   .register-info-box {
       height: 100vh;

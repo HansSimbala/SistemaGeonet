@@ -2,25 +2,43 @@ body{
     background: #eee8e8;
 }
 
-.titulo{
+.tituloa{
     margin: 50px 0px 50px 30px;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 600;
+    color: #fff;
 }
 .menuprofile{
-    background: #fff;
-    border-radius: 5px;
    
 }
 .menuprofile li a{
-    color: #080954;
+    color: #fff;
 }
 .menuprofile li:hover{
-    border: none;
     border-right: 8px solid #eba630;
-    font-size: 20px;
+    font-size: 18px;
     transition: all 0.1s ease-in;
 }
 .menuprofile li a:hover{
     border: none;
 }
+
+.nav-usser{
+    background: #080954;
+    height: 100vh;
+   
+}
+
+.btnClose {
+    position: absolute;
+    right: 0%;
+}
+
+
+
+.fa-times {
+    color: #fff;
+    font-size: 30px;
+}
+
+.btnClose:focus {outline:0;}
