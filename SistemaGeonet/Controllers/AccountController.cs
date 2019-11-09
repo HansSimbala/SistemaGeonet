@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using SistemaGeonet.Models;
 using SistemaGeonet.Models.AccountViewModels;
 using SistemaGeonet.Services;
+using SistemaGeonet.Data;
 
 namespace SistemaGeonet.Controllers
 {
@@ -24,17 +25,22 @@ namespace SistemaGeonet.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+             ILogger<AccountController> logger,
+            RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
+            _context = context;
         }
 
         [TempData]
@@ -220,8 +226,10 @@ namespace SistemaGeonet.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Nombres = model.Nombres, ApellidoMaterno = model.ApellidoMaterno, ApellidoPaterno = model.ApellidoPaterno, IdTipoDocumento = model.IdTipoDocumento, Documento = model.Documento, Telefono = model.Telefono, IdDireccion = model.IdDireccion };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -230,9 +238,64 @@ namespace SistemaGeonet.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
+                    //Comprobar si ya existe el rol Administrador
+                    var xRol = await _roleManager.RoleExistsAsync("AdministradorGeneral");
+                    if (!xRol)
+                    {
+                        var role = new IdentityRole("AdministradorGeneral");
+                        var res = await _roleManager.CreateAsync(role);
+
+                        if (res.Succeeded)
+                        {
+                            await _userManager.AddToRoleAsync(user, "AdministradorGeneral");
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            _logger.LogInformation("User created a new account with password.");
+
+
+                        }
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "UsuarioCliente");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
+
+
+                    }
+
+                    // Vamos a registrar otro roles    
+                    xRol = await _roleManager.RoleExistsAsync("UsuarioCliente");
+                    if (!xRol)
+                    {
+                        var role = new IdentityRole();
+                        role.Name = "UsuarioCliente";
+                        await _roleManager.CreateAsync(role);
+
+                    }
+
+                    xRol = await _roleManager.RoleExistsAsync("AdministradorLocal");
+                    if (!xRol)
+                    {
+                        var role = new IdentityRole();
+                        role.Name = "AdministradorLocal";
+                        await _roleManager.CreateAsync(role);
+
+                    }
+
+
+                    xRol = await _roleManager.RoleExistsAsync("AdministradorAlmacen");
+                    if (!xRol)
+                    {
+                        var role = new IdentityRole();
+                        role.Name = "AdministradorAlmacen";
+                        await _roleManager.CreateAsync(role);
+
+                    }
+
+
                     return RedirectToLocal(returnUrl);
+
+                    //return RedirectToAction("Index", "Inventarios");
                 }
                 AddErrors(result);
             }

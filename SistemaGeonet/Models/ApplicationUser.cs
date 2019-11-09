@@ -9,5 +9,12 @@ namespace SistemaGeonet.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public string Nombres { get; set; }
+        public string ApellidoMaterno { get; set; }
+        public string ApellidoPaterno { get; set; }
+        public int IdTipoDocumento { get; set; }
+        public long Documento { get; set; }
+        public int Telefono { get; set; }
+        public int? IdDireccion { get; set; }
     }
 }
