@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,28 +10,23 @@ using SistemaGeonet.Models;
 
 namespace SistemaGeonet.Controllers
 {
-    public class CarritoesController : Controller
+    public class EquipoesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CarritoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public EquipoesController(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // GET: Carritoes
+        // GET: Equipoes
         public async Task<IActionResult> Index()
         {
-            var userId = _userManager.GetUserId(User);
-            ViewData["idusuario"] = userId;
-            List<DetalleCarrito> listDetalles = _context.Set<DetalleCarrito>().Include(s => s.equipo).ToList();
-            ViewData["listaDetalleCarrito"] = listDetalles;
-            return View(await _context.Carrito.ToListAsync());
+            var applicationDbContext = _context.Equipo.Include(e => e.categoria);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Carritoes/Details/5
+        // GET: Equipoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,39 +34,42 @@ namespace SistemaGeonet.Controllers
                 return NotFound();
             }
 
-            var carrito = await _context.Carrito
-                .SingleOrDefaultAsync(m => m.IdCarrito == id);
-            if (carrito == null)
+            var equipo = await _context.Equipo
+                .Include(e => e.categoria)
+                .SingleOrDefaultAsync(m => m.idEquipo == id);
+            if (equipo == null)
             {
                 return NotFound();
             }
 
-            return View(carrito);
+            return View(equipo);
         }
 
-        // GET: Carritoes/Create
+        // GET: Equipoes/Create
         public IActionResult Create()
         {
+            ViewData["idCategoria"] = new SelectList(_context.Categoria, "IdCategoria", "IdCategoria");
             return View();
         }
 
-        // POST: Carritoes/Create
+        // POST: Equipoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCarrito,IdUsuario,nombres,precioTotal,estado")] Carrito carrito)
+        public async Task<IActionResult> Create([Bind("idEquipo,idCategoria,nombre,marca,numero_serie,descripcion,precio,modelo,imagen_catalogo,imagen_detalle1,imagen_detalle2,imagen_detalle3,calificacion")] Equipo equipo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(carrito);
+                _context.Add(equipo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(carrito);
+            ViewData["idCategoria"] = new SelectList(_context.Categoria, "IdCategoria", "IdCategoria", equipo.idCategoria);
+            return View(equipo);
         }
 
-        // GET: Carritoes/Edit/5
+        // GET: Equipoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,22 +77,23 @@ namespace SistemaGeonet.Controllers
                 return NotFound();
             }
 
-            var carrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdCarrito == id);
-            if (carrito == null)
+            var equipo = await _context.Equipo.SingleOrDefaultAsync(m => m.idEquipo == id);
+            if (equipo == null)
             {
                 return NotFound();
             }
-            return View(carrito);
+            ViewData["idCategoria"] = new SelectList(_context.Categoria, "IdCategoria", "IdCategoria", equipo.idCategoria);
+            return View(equipo);
         }
 
-        // POST: Carritoes/Edit/5
+        // POST: Equipoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCarrito,IdUsuario,nombres,precioTotal,estado")] Carrito carrito)
+        public async Task<IActionResult> Edit(int id, [Bind("idEquipo,idCategoria,nombre,marca,numero_serie,descripcion,precio,modelo,imagen_catalogo,imagen_detalle1,imagen_detalle2,imagen_detalle3,calificacion")] Equipo equipo)
         {
-            if (id != carrito.IdCarrito)
+            if (id != equipo.idEquipo)
             {
                 return NotFound();
             }
@@ -104,12 +102,12 @@ namespace SistemaGeonet.Controllers
             {
                 try
                 {
-                    _context.Update(carrito);
+                    _context.Update(equipo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarritoExists(carrito.IdCarrito))
+                    if (!EquipoExists(equipo.idEquipo))
                     {
                         return NotFound();
                     }
@@ -120,10 +118,11 @@ namespace SistemaGeonet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(carrito);
+            ViewData["idCategoria"] = new SelectList(_context.Categoria, "IdCategoria", "IdCategoria", equipo.idCategoria);
+            return View(equipo);
         }
 
-        // GET: Carritoes/Delete/5
+        // GET: Equipoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,30 +130,31 @@ namespace SistemaGeonet.Controllers
                 return NotFound();
             }
 
-            var carrito = await _context.Carrito
-                .SingleOrDefaultAsync(m => m.IdCarrito == id);
-            if (carrito == null)
+            var equipo = await _context.Equipo
+                .Include(e => e.categoria)
+                .SingleOrDefaultAsync(m => m.idEquipo == id);
+            if (equipo == null)
             {
                 return NotFound();
             }
 
-            return View(carrito);
+            return View(equipo);
         }
 
-        // POST: Carritoes/Delete/5
+        // POST: Equipoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var carrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdCarrito == id);
-            _context.Carrito.Remove(carrito);
+            var equipo = await _context.Equipo.SingleOrDefaultAsync(m => m.idEquipo == id);
+            _context.Equipo.Remove(equipo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarritoExists(int id)
+        private bool EquipoExists(int id)
         {
-            return _context.Carrito.Any(e => e.IdCarrito == id);
+            return _context.Equipo.Any(e => e.idEquipo == id);
         }
     }
 }

@@ -4,50 +4,133 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdUsuario)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.nombres)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.precioTotal)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.estado)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.precioTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.estado)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCarrito">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCarrito">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCarrito">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card">
+    <table class="table table-hover shopping-cart-wrap">
+        <thead class="text-muted">
+            <tr>
+                <th scope="col">Equipo</th>
+                <th scope="col" width="120">Cantidad</th>
+                <th scope="col" width="120">Precio</th>
+                <th scope="col" width="200" class="text-right">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["listaDetalleCarrito"] as IEnumerable<SistemaGeonet.Models.DetalleCarrito>)
+            {
+                if (item.carrito.IdUsuario == UserManager.GetUserId(User))
+                {
+                    <tr>
+                        <td>
+                            <figure class="media">
+                                <div class="img-wrap"><img src="~/images/@item.equipo.imagen_catalogo" class="img-thumbnail img-sm" width="150px" height="150px"></div>
+                                <figcaption class="media-body">
+                                    <h6 class="title text-truncate"><strong>@item.equipo.nombre </strong></h6>
+                                    <dl class="param param-inline small">
+                                        <dt>Marca: </dt>
+                                        <dd>@item.equipo.marca</dd>
+                                    </dl>
+                                    <dl class="param param-inline small">
+                                        <dt>Descripción: </dt>
+                                        <dd>@item.equipo.numero_serie</dd>
+                                    </dl>
+                                </figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <select class="form-control">
+                                <option>@item.cantidad</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="price-wrap">
+                                <var class="price">USD @item.equipo.precio</var>
+                                <small class="text-muted">(USD5 C/U)</small>
+                            </div> <!-- price-wrap .// -->
+                        </td>
+                        <td class="text-right">
+                            @*<a asp-controller="detallecarritoes" asp-action="Delete" asp-route-id="@item.IdDetalleCarrito" class="btn btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>*@
+                            <a data-id="@item.IdDetalleCarrito" data-controller="detallecarritoes" data-action="Delete" data-body-message="Seguro que deseas eliminar?" class="btn btn-outline-danger delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @foreach (var item in Model)
+    {
+
+        if (item.IdUsuario == UserManager.GetUserId(User))
+        {
+            <div class="agrupar text-right">
+                <div data-name="Subtotals" class="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
+                    <span id="sc-subtotal-label-buybox" class="a-size-medium sc-number-of-items">
+                        Subtotal:
+                    </span>
+                    <span id="sc-subtotal-amount-buybox" class="a-color-price sc-price-container a-text-bold">
+                        <span class="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
+                            USD @Html.DisplayFor(modelItem => item.precioTotal)
+                        </span>
+                    </span>
+                </div>
+                <br />
+                <td class="text-right">
+                    <a asp-controller="ordenpedidoes" asp-action="create" class="btn btn-primary">
+                        Proceder al pago
+                    </a>
+                </td>
+            </div>
+        }
+    }
+
+</div>
+
+@*<h2>Index</h2>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdUsuario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombres)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.precioTotal)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.estado)
+                    </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.precioTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdCarrito">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdCarrito">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdCarrito">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

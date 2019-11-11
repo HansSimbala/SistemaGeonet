@@ -65,8 +65,14 @@
                             <ul class="social">
                                 <li hidden><a href=""><i class="fas fa-search"></i></a></li>
                                 <li hidden><a href=""><i class="fas fa-heart"></i></a></li>
-                                <li><a asp-controller="detallecarritoes" asp-action="create" asp-route-id="@Html.DisplayFor(modelItem => item.Equipo.idEquipo)"><i class="fas fa-shopping-cart"></i></a></li>
-
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li><a asp-controller="detallecarritoes" asp-action="create" asp-route-id="@item.Equipo.idEquipo"><i class="fas fa-shopping-cart"></i></a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-controller="equipoes" asp-action="details" asp-route-id="@item.Equipo.idEquipo"><i class="fas fa-shopping-cart"></i></a></li>
+                                }
                             </ul>
                             <span class="product-new-label">Oferta</span>
                         </div>
@@ -189,55 +195,3 @@
     </div>
 </div>
 <script src="../js/index.js"></script>
-@*<tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.titulo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fecha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidadReal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidadVirtual)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Equipo.idEquipo)
-        </td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.IdInventario">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.IdInventario">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.IdInventario">Delete</a>
-        </td>
-    </tr>*@
-@*<h2>Index</h2>
-
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.titulo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.fecha)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.cantidadReal)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.cantidadVirtual)
-                    </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Equipo)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>*@

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace SistemaGeonet.Controllers
     public class DetalleCarritoesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        UserManager<ApplicationUser> _userManager;
 
-        public DetalleCarritoesController(ApplicationDbContext context)
+        public DetalleCarritoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManage)
         {
             _context = context;
+            _userManager = userManage;
         }
 
         // GET: DetalleCarritoes
@@ -47,9 +50,27 @@ namespace SistemaGeonet.Controllers
         }
 
         // GET: DetalleCarritoes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int id)
         {
-            ViewData["IdCarrito"] = new SelectList(_context.Carrito, "IdCarrito", "IdCarrito");
+            var userId = _userManager.GetUserId(User);
+            //var tCarrito = _context.Carrito.Where(x => x.IdUsuario.Equals(userId));
+            var tEquipo = await _context.Equipo.SingleOrDefaultAsync(m => m.idEquipo == id);
+            var tInventario = await _context.Inventario.SingleOrDefaultAsync(m => m.IdEquipo == id);
+            var tCarrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdUsuario == userId);
+            var nombre = tEquipo.nombre;
+            var descripcion = tEquipo.descripcion;
+            var img_principal = tEquipo.imagen_catalogo;
+            var img_d1 = tEquipo.imagen_detalle1;
+            var precio = tEquipo.precio;
+            var cantidadvirtual = tInventario.cantidadVirtual;
+            var idCarrito = tCarrito.IdCarrito;
+            ViewData["idCarritox"] = idCarrito;
+            ViewData["nombre"] = nombre;
+            ViewData["descripcion"] = descripcion;
+            ViewData["img_p"] = img_principal;
+            ViewData["img_d1"] = img_d1;
+            ViewData["precio"] = precio;
+            ViewData["cantidadVirtual"] = cantidadvirtual;
             ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "idEquipo", "idEquipo");
             return View();
         }
@@ -65,7 +86,7 @@ namespace SistemaGeonet.Controllers
             {
                 _context.Add(detalleCarrito);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Inventarios");
             }
             ViewData["IdCarrito"] = new SelectList(_context.Carrito, "IdCarrito", "IdCarrito", detalleCarrito.IdCarrito);
             ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "idEquipo", "idEquipo", detalleCarrito.IdEquipo);

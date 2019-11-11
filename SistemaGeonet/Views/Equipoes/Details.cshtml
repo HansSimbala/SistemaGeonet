@@ -1,0 +1,91 @@
+﻿@model SistemaGeonet.Models.Equipo
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Equipo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.marca)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.marca)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_serie)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.numero_serie)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.precio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.precio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.modelo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.modelo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen_catalogo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.imagen_catalogo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen_detalle1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.imagen_detalle1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen_detalle2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.imagen_detalle2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen_detalle3)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.imagen_detalle3)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.calificacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.calificacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.categoria)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.categoria.IdCategoria)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idEquipo">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
