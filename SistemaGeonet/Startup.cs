@@ -61,7 +61,7 @@ namespace SistemaGeonet
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Inventarios}/{action=Index}/{id?}");
             });
         }
     }
