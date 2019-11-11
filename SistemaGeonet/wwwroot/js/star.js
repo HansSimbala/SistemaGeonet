@@ -35,6 +35,4 @@ $(document).ready(function (){
         $('#s1,#s2,#s3,#s4,#s5').css("color","#080964")
         valor= "5"
     })
-
-    
 });
