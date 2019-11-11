@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "GEONET";
 }
-
+    <head>
+        <link href="~/css/star.css" rel="stylesheet" />
+    </head>
 <div id="demo" class="carousel slide" data-ride="carousel">
 
     <!-- Indicators -->
@@ -93,11 +95,11 @@
                     <div class="product-content">
                         <h3 class="title"><a href="#">GPS GARMIN</a></h3>
                         <ul class="rating">
-                            <li class="fa fa-star"></li>
-                            <li class="fa fa-star"></li>
-                            <li class="fa fa-star"></li>
-                            <li class="fa fa-star"></li>
-                            <li class="fa fa-star"></li>
+                            <li class="fa fa-star valor" aria-hidden="true" id="s1"></li>
+                            <li class="fa fa-star valor" aria-hidden="true" id="s2"></li>
+                            <li class="fa fa-star valor" aria-hidden="true" id="s3"></li>
+                            <li class="fa fa-star valor" aria-hidden="true" id="s4"></li>
+                            <li class="fa fa-star valor" aria-hidden="true" id="s5"></li>
                         </ul>
                         <div class="price">
                             $10.00
@@ -267,9 +269,7 @@
         </div>
     </div>
 </div>
-<script src="../js/index.js"></script>
-
-
+@*el archvo js star esta referenciado en el shared*@
 
 
 
