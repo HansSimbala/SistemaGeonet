@@ -36,5 +36,7 @@ namespace SistemaGeonet.Data
         public DbSet<SistemaGeonet.Models.OrdenPedido> OrdenPedido { get; set; }
 
         public DbSet<SistemaGeonet.Models.Proveedor> Proveedor { get; set; }
+
+        public DbSet<SistemaGeonet.Models.Resena> Resena { get; set; }
     }
 }

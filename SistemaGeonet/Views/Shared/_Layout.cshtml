@@ -51,9 +51,7 @@
             </ul>
             <ul class="navbar-nav ml-auto menu">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-shopping-cart"></i> MI CARRITO
-                    </a>
+                    <a asp-controller="Carritoes" asp-action="index" class="nav-link"> <i class="fas fa-shopping-cart"></i> MI CARRITO</a>
                 </li>
                 @await Html.PartialAsync("_LoginPartial")
             </ul>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace SistemaGeonet.Models
 {
@@ -21,15 +20,24 @@ namespace SistemaGeonet.Models
 
         public string descripcion { get; set; }
 
-        public string foto { get; set; }
-
         public decimal? precio { get; set; }
 
         public string modelo { get; set; }
+
+        public string imagen_catalogo { get; set; }
+
+        public string imagen_detalle1 { get; set; }
+
+        public string imagen_detalle2 { get; set; }
+
+        public string imagen_detalle3 { get; set; }
+
+        public int? calificacion { get; set; }
 
         public Categoria categoria { get; set; }
 
         public ICollection<Inventario> inventarios { get; set; }
         public ICollection<DetalleCarrito> detalleCarritos { get; set; }
+        public ICollection<Resena> resena { get; set; }
     }
 }
