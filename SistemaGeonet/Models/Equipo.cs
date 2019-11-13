@@ -38,6 +38,6 @@ namespace SistemaGeonet.Models
 
         public ICollection<Inventario> inventarios { get; set; }
         public ICollection<DetalleCarrito> detalleCarritos { get; set; }
-        public ICollection<Resena> resena { get; set; }
+        public ICollection<Resena> resenas { get; set; }
     }
 }

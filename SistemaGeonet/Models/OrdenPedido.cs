@@ -18,13 +18,13 @@ namespace SistemaGeonet.Models
 
         public string telefono { get; set; }
 
-        public string numero_tarjeta { get; set; }
-
-        public string password_tarjeta { get; set; }
-
-        public string cvv { get; set; }
-
         public string email { get; set; }
+
+        public int IdMetodoPago { get; set; }
+
+        public int IdPago { get; set; }
+
+        public MetodoPago metodoPago { get; set; }
 
         public Carrito carrito { get; set; }
     }
