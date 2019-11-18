@@ -145,6 +145,17 @@ namespace SistemaGeonet.Controllers
             return View(detalleCarrito);
         }
 
+        [HttpPost]
+        public async Task<String> Editar(int IdDetalleCarrito, int cantidad)
+        {
+            var detalleCarrito = await _context.DetalleCarrito.SingleOrDefaultAsync(m => m.IdDetalleCarrito == IdDetalleCarrito);
+            detalleCarrito.cantidad = cantidad;
+            _context.Update(detalleCarrito);
+            await _context.SaveChangesAsync();
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
+            return "Edited";
+        }
+
         // GET: DetalleCarritoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -173,6 +184,15 @@ namespace SistemaGeonet.Controllers
             _context.DetalleCarrito.Remove(detalleCarrito);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            var detalleCarrito = await _context.DetalleCarrito.SingleOrDefaultAsync(m => m.IdDetalleCarrito == id);
+            _context.DetalleCarrito.Remove(detalleCarrito);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Carritoes");
         }
 
         private bool DetalleCarritoExists(int id)

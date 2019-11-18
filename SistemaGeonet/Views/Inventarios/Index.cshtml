@@ -67,11 +67,8 @@
                                 <li hidden><a href=""><i class="fas fa-heart"></i></a></li>
                                 @if (SignInManager.IsSignedIn(User))
                                 {
-                                    <li><a asp-controller="detallecarritoes" asp-action="create" asp-route-id="@item.Equipo.idEquipo"><i class="fas fa-shopping-cart"></i></a></li>
-                                }
-                                else
-                                {
-                                    <li><a asp-controller="equipoes" asp-action="details" asp-route-id="@item.Equipo.idEquipo"><i class="fas fa-shopping-cart"></i></a></li>
+                                    <li id="idcant" value="1" hidden></li>
+                                    <li><a onclick="agregarCarrito(@Html.DisplayFor(modelItem => item.Equipo.idEquipo), 'idcant')"><i class="fas fa-shopping-cart"></i></a></li>
                                 }
                             </ul>
                             <span class="product-new-label">Oferta</span>
@@ -87,7 +84,7 @@
                             </ul>
                             <div class="price">
                                 $@Html.DisplayFor(modelItem => item.Equipo.precio)
-                                <span>$20.00</span>
+                                <span>$@Html.DisplayFor(modelItem => item.Equipo.precio)</span>
                             </div>
                         </div>
                     </div>
@@ -194,4 +191,5 @@
         </div>
     </div>
 </div>
-@*<script src="../js/index.js"></script>*@
+<script src="~/js/agregar.js"></script>
+@*<script src="~/js/index.js"></script>*@

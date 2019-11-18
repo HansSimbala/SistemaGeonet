@@ -20,48 +20,45 @@
             @foreach (var item in ViewData["listaDetalleCarrito"] as IEnumerable<SistemaGeonet.Models.DetalleCarrito>)
             {
 
-                if (ViewData["idUsuariox"] == UserManager.GetUserId(User))
+                if (item.IdCarrito == (ViewBag.idcarrito))
                 {
-                        <tr>
-                            <td>
-                                <figure class="media">
-                                    <div class="img-wrap"><img src="~/images/@item.equipo.imagen_catalogo" class="img-thumbnail img-sm" width="150px" height="150px"></div>
-                                    <figcaption class="media-body">
-                                        <h6 class="title text-truncate"><strong>@item.equipo.nombre </strong></h6>
-                                        <dl class="param param-inline small">
-                                            <dt>Marca: </dt>
-                                            <dd>@item.equipo.marca</dd>
-                                        </dl>
-                                        <dl class="param param-inline small">
-                                            <dt>Descripción: </dt>
-                                            <dd>@item.equipo.numero_serie</dd>
-                                        </dl>
-                                    </figcaption>
-                                </figure>
-                            </td>
-                            <td>
-                                <select class="form-control">
-                                    <option>@item.cantidad</option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="price-wrap">
-                                    <var class="price">USD @item.equipo.precio</var>
-                                    <small class="text-muted">(USD5 C/U)</small>
-                                </div> <!-- price-wrap .// -->
-                            </td>
-                            <td class="text-right">
-                                <a asp-controller="detallecarritoes1" asp-action="Delete" asp-route-id="@item.IdDetalleCarrito" class="btn btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                            </td>
-                        </tr>
-                    }
-                
+                    <tr>
+                        <td>
+                            <figure class="media">
+                                <div class="img-wrap"><img src="~/images/@item.equipo.imagen_catalogo" class="img-thumbnail img-sm" width="150px" height="150px"></div>
+                                <figcaption class="media-body">
+                                    <h6 class="title text-truncate"><strong>@item.equipo.nombre </strong></h6>
+                                    <dl class="param param-inline small">
+                                        <dt>Marca: </dt>
+                                        <dd>@item.equipo.marca</dd>
+                                    </dl>
+                                    <dl class="param param-inline small">
+                                        <dt>Descripción: </dt>
+                                        <dd>@item.equipo.numero_serie</dd>
+                                    </dl>
+                                </figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <input type="number" id="idcantidad" value="@item.cantidad" class="form-control input-number  text-center" onchange="editQuantity(@item.IdDetalleCarrito, 'idcantidad')" />
+                        </td>
+                        <td>
+                            <div class="price-wrap">
+                                <var class="price">USD @item.equipo.precio</var>
+                                <small class="text-muted">(USD5 C/U)</small>
+                            </div> <!-- price-wrap .// -->
+                        </td>
+                        <td class="text-right">
+                            <button type="button" onclick="eliminar(@item.IdDetalleCarrito)" class="btn btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                }
+
             }
-            </tbody>
+        </tbody>
     </table>
     @foreach (var item in Model)
     {
-
         if (item.IdUsuario == UserManager.GetUserId(User))
         {
             <div class="agrupar text-right">
@@ -86,3 +83,6 @@
     }
 
 </div>
+
+<script src="~/js/delete.js"></script>
+<script src="~/js/edit.js"></script>

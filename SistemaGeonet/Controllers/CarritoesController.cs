@@ -28,8 +28,8 @@ namespace SistemaGeonet.Controllers
             var userId = _userManager.GetUserId(User);
             ViewData["idusuario"] = userId;
             var tCarrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdUsuario == userId);
-            var idUsuario = tCarrito.IdUsuario;
-            ViewData["idUsuariox"] = idUsuario;
+            var idCarrito = tCarrito.IdCarrito;
+            ViewData["idcarrito"] = idCarrito;
             List<DetalleCarrito> listDetalles = _context.Set<DetalleCarrito>().Include(s => s.equipo).ToList();
             ViewData["listaDetalleCarrito"] = listDetalles;
             return View(await _context.Carrito.ToListAsync());
