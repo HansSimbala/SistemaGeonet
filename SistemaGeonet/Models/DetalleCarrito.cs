@@ -10,6 +10,8 @@ namespace SistemaGeonet.Models
         [Key]
         public int IdDetalleCarrito { get; set; }
 
+        public int hasOrden { get; set; }
+
         public int IdCarrito { get; set; }
 
         public int IdEquipo { get; set; }
@@ -18,6 +20,5 @@ namespace SistemaGeonet.Models
 
         public Equipo equipo { get; set; }
 
-        public Carrito carrito { get; set; }
     }
 }

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+
 namespace SistemaGeonet.Models
 {
-    public class Carrito
+    public class CarritoOrden
     {
         [Key]
         public int IdCarrito { get; set; }
@@ -14,9 +15,11 @@ namespace SistemaGeonet.Models
 
         public string nombres { get; set; }
 
-        public decimal? subTotal { get; set; }
+        public decimal? precioTotal { get; set; }
 
         public string estado { get; set; }
-    }
 
+        public ICollection<OrdenPedido> ordenPedidos { get; set; }
+
+    }
 }

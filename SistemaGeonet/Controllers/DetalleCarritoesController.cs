@@ -25,7 +25,7 @@ namespace SistemaGeonet.Controllers
         // GET: DetalleCarritoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.DetalleCarrito.Include(d => d.carrito).Include(d => d.equipo);
+            var applicationDbContext = _context.DetalleCarrito.Include(d => d.equipo);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -38,7 +38,6 @@ namespace SistemaGeonet.Controllers
             }
 
             var detalleCarrito = await _context.DetalleCarrito
-                .Include(d => d.carrito)
                 .Include(d => d.equipo)
                 .SingleOrDefaultAsync(m => m.IdDetalleCarrito == id);
             if (detalleCarrito == null)
@@ -50,28 +49,9 @@ namespace SistemaGeonet.Controllers
         }
 
         // GET: DetalleCarritoes/Create
-        public async Task<IActionResult> Create(int id)
+        public IActionResult Create()
         {
-            var userId = _userManager.GetUserId(User);
-            //var tCarrito = _context.Carrito.Where(x => x.IdUsuario.Equals(userId));
-            var tEquipo = await _context.Equipo.SingleOrDefaultAsync(m => m.idEquipo == id);
-            var tInventario = await _context.Inventario.SingleOrDefaultAsync(m => m.IdEquipo == id);
-            var tCarrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdUsuario == userId);
-            var nombre = tEquipo.nombre;
-            var descripcion = tEquipo.descripcion;
-            var img_principal = tEquipo.imagen_catalogo;
-            var img_d1 = tEquipo.imagen_detalle1;
-            var precio = tEquipo.precio;
-            var cantidadvirtual = tInventario.cantidadVirtual;
-            var idCarrito = tCarrito.IdCarrito;
-            ViewData["idCarritox"] = idCarrito;
-            ViewData["nombre"] = nombre;
-            ViewData["descripcion"] = descripcion;
-            ViewData["img_p"] = img_principal;
-            ViewData["img_d1"] = img_d1;
-            ViewData["precio"] = precio;
-            ViewData["cantidadVirtual"] = cantidadvirtual;
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "idEquipo", "idEquipo");
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "idEquipo", "idEquipo");
             return View();
         }
 
@@ -80,17 +60,36 @@ namespace SistemaGeonet.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdDetalleCarrito,IdCarrito,IdEquipo,cantidad")] DetalleCarrito detalleCarrito)
+        public async Task<IActionResult> Create([Bind("IdDetalleCarrito,hasOrden,IdCarrito,IdEquipo,cantidad")] DetalleCarrito detalleCarrito)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(detalleCarrito);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Inventarios");
+                return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarrito"] = new SelectList(_context.Carrito, "IdCarrito", "IdCarrito", detalleCarrito.IdCarrito);
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
             return View(detalleCarrito);
+        }
+
+        // POST: DetalleCarritoes/Agregar
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public async Task<String> Agregar(int hasOrden, int IdCarrito, int IdEquipo, int cantidad, DetalleCarrito detalleCarrito)
+        {
+            var userId = _userManager.GetUserId(User);
+            var tCarrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdUsuario == userId);
+            var idCarrito = tCarrito.IdCarrito;
+            detalleCarrito = new DetalleCarrito {
+                hasOrden = hasOrden,
+                IdCarrito = idCarrito,
+                IdEquipo = IdEquipo,
+                cantidad = cantidad
+            };
+            _context.Add(detalleCarrito);
+            await _context.SaveChangesAsync();           
+            return "success";
         }
 
         // GET: DetalleCarritoes/Edit/5
@@ -106,8 +105,7 @@ namespace SistemaGeonet.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCarrito"] = new SelectList(_context.Carrito, "IdCarrito", "IdCarrito", detalleCarrito.IdCarrito);
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
             return View(detalleCarrito);
         }
 
@@ -116,7 +114,7 @@ namespace SistemaGeonet.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdDetalleCarrito,IdCarrito,IdEquipo,cantidad")] DetalleCarrito detalleCarrito)
+        public async Task<IActionResult> Edit(int id, [Bind("IdDetalleCarrito,hasOrden,IdCarrito,IdEquipo,cantidad")] DetalleCarrito detalleCarrito)
         {
             if (id != detalleCarrito.IdDetalleCarrito)
             {
@@ -143,8 +141,7 @@ namespace SistemaGeonet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarrito"] = new SelectList(_context.Carrito, "IdCarrito", "IdCarrito", detalleCarrito.IdCarrito);
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "idEquipo", "idEquipo", detalleCarrito.IdEquipo);
             return View(detalleCarrito);
         }
 
@@ -157,7 +154,6 @@ namespace SistemaGeonet.Controllers
             }
 
             var detalleCarrito = await _context.DetalleCarrito
-                .Include(d => d.carrito)
                 .Include(d => d.equipo)
                 .SingleOrDefaultAsync(m => m.IdDetalleCarrito == id);
             if (detalleCarrito == null)

@@ -59,7 +59,7 @@
                 <div class=" col-md-3 col-sm-6">
                     <div class="product-grid7">
                         <div class="product-image7">
-                            <a href="#">
+                            <a asp-controller="inventarios" asp-action="details" asp-route-id="@item.IdInventario">
                                 <img class="pic-1" src="~/images/@Html.DisplayFor(modelItem => item.Equipo.imagen_catalogo)">
                             </a>
                             <ul class="social">
@@ -194,4 +194,4 @@
         </div>
     </div>
 </div>
-<script src="../js/index.js"></script>
+@*<script src="../js/index.js"></script>*@

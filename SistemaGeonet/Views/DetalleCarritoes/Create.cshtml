@@ -2,245 +2,46 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <hr>
-    <div class="wrapper row">
-        <div class="preview col-md-6">
-            <div class="preview-pic tab-content">
-                <div class="tab-pane active" id="pic-1"><img src="~/images/@(ViewBag.img_p)" /></div>
+<h2>Create</h2>
+
+<h4>DetalleCarrito</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="hasOrden" class="control-label"></label>
+                <input asp-for="hasOrden" class="form-control" />
+                <span asp-validation-for="hasOrden" class="text-danger"></span>
             </div>
-        </div>
-        <form asp-action="Create" class="details col-md-6">
-            <h3 class="product-title">@(ViewBag.nombre)</h3>
-            <div class="rating">
-                <div class="stars">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <span class="review-no">41 Opiniones</span>
+            <div class="form-group">
+                <label asp-for="IdCarrito" class="control-label"></label>
+                <input asp-for="IdCarrito" class="form-control" />
+                <span asp-validation-for="IdCarrito" class="text-danger"></span>
             </div>
-            <p class="product-description">
-                @(ViewBag.descripcion)
-            </p>
-            <h4 class="price">Precio: <span>@(ViewBag.precio)</span></h4>
-            <p class="vote">
-                <strong>91%</strong> de los compradores recomiendan este producto <strong>
-                    (87
-                    votos)
-                </strong>
-            </p>
-            <div style="display:none" class="form-row">
-                <input asp-for="IdEquipo" value="@ViewContext.RouteData.Values["id"]" class="form-control" />
+            <div class="form-group">
+                <label asp-for="IdEquipo" class="control-label"></label>
+                <select asp-for="IdEquipo" class ="form-control" asp-items="ViewBag.IdEquipo"></select>
             </div>
-            <div style="display:none" class="form-row">
-                <input asp-for="IdCarrito" value="@(ViewBag.idCarritox)" class="form-control" />
+            <div class="form-group">
+                <label asp-for="cantidad" class="control-label"></label>
+                <input asp-for="cantidad" class="form-control" />
+                <span asp-validation-for="cantidad" class="text-danger"></span>
             </div>
-            <div class="cantidad input-group">
-                <span class="input-group-btn">
-                    <button type="button" class="quantity-left-minus btn  btn-number" data-type="minus"
-                            data-field="">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </span>
-                <input asp-for="cantidad" id="quantity" class="form-control input-number  text-center" value="1" min="1" max="@(ViewBag.cantidadVirtual)" />
-                <span class="input-group-btn">
-                    <button type="button" class="quantity-right-plus btn  btn-number" data-type="plus"
-                            data-field="">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </span>
-            </div>
-            <div class="action">
-                <button class="add-to-cart btn btn-default" type="submit">add to cart</button>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
-    <hr>
-</div>
-<div class="container tabs">
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item active">
-                    <a class="nav-link active" data-toggle="tab" href="#seccion1">Descripción</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link #seccion2" data-toggle="tab" href="#seccion2">Opiniones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#seccion3">Preguntas</a>
-                </li>
-            </ul>
-            <!-- Contenido -->
-            <div class="tab-content contenido">
-                <div class="tab-pane active" id="seccion1">
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque, officia nobis
-                        aspernatur obcaecati non commodi architecto veniam, iure porro consectetur animi enim quasi
-                        nihil velit mollitia asperiores! Sequi, facilis deleniti.
-                        <ul>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                        </ul>
-                        Omnis sed facilis, sapiente
-                        ratione odio et repellendus adipisci fugiat consequuntur, debitis aspernatur quae eos,
-                        nostrum doloremque optio! Necessitatibus blanditiis perferendis obcaecati suscipit, ullam
-                        dolorem ut animi officiis minima, repellendus distinctio ad autem asperiores dolore in,
-                        expedita dolor earum nisi dolores. Quasi, aliquam! Sunt repellendus eos placeat dolorem
-                        omnis ullam sed ea rerum provident odio ratione soluta voluptate fugiat molestias, neque non
-                        nemo exercitationem commodi blanditiis officia nesciunt? Illum, exercitationem!
-                    </p>
-                </div>
-                <div class="tab-pane fade " id="seccion2">
-                    <div class="container">
-                        <div class="one-review">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>Rahul Roy</p>
-                                </div>
-                                <div class="col-md-6 text-success">
-                                    <small>30th Jan</small>
-                                </div>
-                            </div>
-                            <div class="row text-success">
-                                <div class="col-md-12">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="row pt-2">
-                                <div class="col-md-12">
-                                    <h6>Worse web hosting company</h6>
-                                    <p>
-                                        I think I started out at under $3 per month 5 or 6 years ago. The price has
-                                        steadily increased and my latest renewal offer was $16.99 per month.
-                                        Additionally last year my wife started having spam problems and it seems
-                                        like someone gained access to all her email correspondence. The only place
-                                        that we could pin it down to was the justhost SMTP server. Support was very
-                                        evasive when I tried to explain what I thought happened.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row pt-2">
-                                <div class="col-md-4">
-                                    <ul class="list-inline list-unstyled">
-                                        <li class="list-inline-item">
-                                            <p>is this helpful to you?</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <button type="button"
-                                                    class="btn btn-outline-success">
-                                                Yes
-                                            </button>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <button type="button"
-                                                    class="btn btn-outline-danger">
-                                                No
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="one-review">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>Rahul Roy</p>
-                                </div>
-                                <div class="col-md-6 text-success">
-                                    <small>30th Jan</small>
-                                </div>
-                            </div>
-                            <div class="row text-success">
-                                <div class="col-md-12">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="row pt-2">
-                                <div class="col-md-12">
-                                    <h6>Worse web hosting company</h6>
-                                    <p>
-                                        I think I started out at under $3 per month 5 or 6 years ago. The price has
-                                        steadily increased and my latest renewal offer was $16.99 per month.
-                                        Additionally last year my wife started having spam problems and it seems
-                                        like someone gained access to all her email correspondence. The only place
-                                        that we could pin it down to was the justhost SMTP server. Support was very
-                                        evasive when I tried to explain what I thought happened.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row pt-2">
-                                <div class="col-md-4">
-                                    <ul class="list-inline list-unstyled">
-                                        <li class="list-inline-item">
-                                            <p>is this helpful to you?</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <button type="button"
-                                                    class="btn btn-outline-success">
-                                                Yes
-                                            </button>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <button type="button"
-                                                    class="btn btn-outline-danger">
-                                                No
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade " id="seccion3">
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-@*<h2>Create</h2>
-
-    <h4>DetalleCarrito</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="IdCarrito" class="control-label"></label>
-                    <select asp-for="IdCarrito" class ="form-control" asp-items="ViewBag.IdCarrito"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdEquipo" class="control-label"></label>
-                    <select asp-for="IdEquipo" class ="form-control" asp-items="ViewBag.IdEquipo"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="cantidad" class="control-label"></label>
-                    <input asp-for="cantidad" class="form-control" />
-                    <span asp-validation-for="cantidad" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>*@
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

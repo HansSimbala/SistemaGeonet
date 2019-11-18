@@ -14,7 +14,7 @@ namespace SistemaGeonet.Models
 
         public string titulo { get; set; }
 
-        public DateTime fecha { get; set; }
+        public DateTime? fecha { get; set; }
 
         public int cantidadReal { get; set; }
 

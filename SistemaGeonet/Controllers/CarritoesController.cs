@@ -27,6 +27,9 @@ namespace SistemaGeonet.Controllers
         {
             var userId = _userManager.GetUserId(User);
             ViewData["idusuario"] = userId;
+            var tCarrito = await _context.Carrito.SingleOrDefaultAsync(m => m.IdUsuario == userId);
+            var idUsuario = tCarrito.IdUsuario;
+            ViewData["idUsuariox"] = idUsuario;
             List<DetalleCarrito> listDetalles = _context.Set<DetalleCarrito>().Include(s => s.equipo).ToList();
             ViewData["listaDetalleCarrito"] = listDetalles;
             return View(await _context.Carrito.ToListAsync());
@@ -61,7 +64,7 @@ namespace SistemaGeonet.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCarrito,IdUsuario,nombres,precioTotal,estado")] Carrito carrito)
+        public async Task<IActionResult> Create([Bind("IdCarrito,IdUsuario,nombres,subTotal,estado")] Carrito carrito)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +96,7 @@ namespace SistemaGeonet.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCarrito,IdUsuario,nombres,precioTotal,estado")] Carrito carrito)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCarrito,IdUsuario,nombres,subTotal,estado")] Carrito carrito)
         {
             if (id != carrito.IdCarrito)
             {

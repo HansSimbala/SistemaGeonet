@@ -26,6 +26,6 @@ namespace SistemaGeonet.Models
 
         public MetodoPago metodoPago { get; set; }
 
-        public Carrito carrito { get; set; }
+        public CarritoOrden carritoOrden { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -13,11 +14,14 @@
     <thead>
         <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.hasOrden)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdCarrito)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.cantidad)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.carrito)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.equipo)
             </th>
@@ -28,10 +32,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.cantidad)
+                @Html.DisplayFor(modelItem => item.hasOrden)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.carrito.IdCarrito)
+                @Html.DisplayFor(modelItem => item.IdCarrito)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.equipo.idEquipo)

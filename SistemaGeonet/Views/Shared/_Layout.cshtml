@@ -7,12 +7,13 @@
 
     <environment include="Development">
         @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-            <link rel="stylesheet" href="~/css/site.css" />*@
+        <link rel="stylesheet" href="~/css/site.css" />*@
         <link rel="shortcut icon" href="~/images/logotipo.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="~/bootstrap-4.3.1-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="~/css/principal.css">
-        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="~/css/detalle.css">
+        <link rel="stylesheet" href="~/css/index.css">
         <script src="~/js/fontawesome.min.js"></script>
         <script src="~/js/solid.min.js">
         </script>
@@ -29,8 +30,8 @@
     @*--------------------------Navbar------------------------------------*@
     <nav class="navbar navbar1 navbar-expand-lg">
 
-        <a asp-area="" asp-controller="Home" asp-action="Index">
-            <img src="../images/logo.png" class="logotipo" alt="">
+        <a asp-area="" asp-controller="Inventarios" asp-action="Index">
+            <img src="~/images/logo.png" class="logotipo" alt="">
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -117,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <img src="../images/logo.png" class="imgLogo" alt="">
+        <img src="~/images/logo.png" class="imgLogo" alt="">
     </div>
     @*<nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -146,7 +147,9 @@
         <script src="~/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
         <script src="~/js/star.js"></script>
         <script src="~/js/principal.js"></script>
-       @* <script src="~/js/delete.js"></script>*@
+        <script src="~/js/detalle.js"></script>
+
+        @* <script src="~/js/delete.js"></script>*@
 
         @*<script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
