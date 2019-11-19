@@ -40,7 +40,7 @@
                             </figure>
                         </td>
                         <td>
-                            <input type="number" id="idcantidad" value="@item.cantidad" class="form-control input-number  text-center" onchange="editQuantity(@item.IdDetalleCarrito, 'idcantidad')" />
+                            <input type="number" id="@item.IdDetalleCarrito" value="@item.cantidad" class="form-control input-number  text-center" onchange="editQuantity(@item.IdDetalleCarrito)" />
                         </td>
                         <td>
                             <div class="price-wrap">

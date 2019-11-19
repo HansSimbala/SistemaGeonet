@@ -10,7 +10,7 @@ namespace SistemaGeonet.Models
         [Key]
         public int IdOrdenPedido { get; set; }
 
-        public int IdCarrito { get; set; }
+        public int IdCarritoOrden { get; set; }
 
         public DateTime fechapedido { get; set; }
 

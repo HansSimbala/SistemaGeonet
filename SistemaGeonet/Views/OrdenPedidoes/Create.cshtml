@@ -1,0 +1,240 @@
+﻿@model SistemaGeonet.Models.OrdenPedido
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="fondo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 clearfix info card" id="checkout">
+                <div class="box">
+                    @*<form>*@
+                    <div class="content">
+
+                        <!-- /.row -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="titulo">Datos Personales</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="firstname">Apellido Paterno</label>
+                                    <input type="text" class="form-control" id="firstname">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="lastname">Apellido Materno</label>
+                                    <input type="text" class="form-control" id="lastname">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.row -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="titulo">Tipo de Pago</p>
+                            </div>
+                        </div>
+                        <div>Seleccione método de pago</div>
+                        <div class="form-group">
+                            <select id="IdMetodoPago" class="form-control" onchange="getPago()">
+                                <option value="0" style="display: none;">Seleccione Metodo Pago</option>
+                                <option value="1">Tarjeta</option>
+                                <option value="2">Voucher</option>
+                            </select>
+                        </div>
+                        <div class="row" id="Tarjeta" style="display: none;">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Número de Tarjeta</label>
+                                    <input type="text" class="form-control" placeholder="Ejemplo: 4557 8805 ......." id="IdTarjeta">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Fecha</label>
+                                    <input type="text" class="form-control" id="IdFecha">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <div class="form-group">
+                                    <label>CCV</label>
+                                    <input type="text" class="form-control" id="IdCvv">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="Voucher" style="display: none;">
+                            <div>
+                                <div class="col-sm-6 col-md-12 center-block">
+                                    <label for="txtNroTarjeta">Ingrese la foto del Voucher</label>
+                                    <br />
+                                    <input type="file" id="idFoto">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="titulo">Datos del Envio</p>
+                            </div>
+                            <div class="col-sm-6 col-md-12">
+                                <div class="form-group">
+                                    <label for="txtDireccion">Dirección</label>
+                                    <input type="text" class="form-control"
+                                           placeholder="Ejemplo: calle las ciruelas" id="txtDireccion">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <label for="txtDistrito">Distrito</label>
+                                    <select class="form-control" id="txtDistrito">
+                                        <option value="germany">Comas</option>
+                                        <option value="austria">Puente Piedra</option>
+                                        <option value="swiss">Los Olivos</option>
+                                        <option value="usa">San Martin de Porres</option>
+                                        <option value="usa">Surco</option>
+                                        <option value="usa">Miraflores</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="phone">Telefono</label>
+                                    <input type="text" class="form-control" id="phone">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">E-Mail</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /.row -->
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-warning float-right" onclick="ordenarPedido()"><b>Ordenar Pedido</b></button>
+                            </div>
+                        </div>
+
+                        <!-- /.row -->
+                        @*<div class="form-group">
+            <button type="button" class="btn btn-warning float-right"><b />Ordenar</button>
+        </div>*@
+
+                    </div>
+                    @*</form>*@
+                </div>
+                <!-- /.box -->
+
+
+            </div>
+            <!-- /.col-md-9 -->
+            <div class="col-md-3 card rpedido">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="titulo">Resumen del Pedido</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <label class="col-md-6 text-left subtitulo"> Sub Total:</label>
+                            <label class="col-md-6 text-right" id="txtSubTotal"> $250</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6 text-left subtitulo"> IGV(18%):</label>
+                            <label class="col-md-6 text-right" id="txtIgv"> $250</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6 text-left subtitulo"> Total:</label>
+                            <label class="col-md-6 text-right" id="txtTotal"> $250</label>
+                        </div>
+                        <div class="row">
+                            <div class=" col-md-6 text-left subtitulo">
+                                <input type="submit" id="btnVolver" class="btn btn-primary" value="Volver">
+                            </div>
+                            <div class=" col-md-6 text-right">
+                                <input type="submit" id="btnVolver" class="btn btn-primary" value="Siguiente">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+</div>
+
+<script src="~/js/pago.js"></script>
+
+@*<h2>Create</h2>
+
+<h4>OrdenPedido</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdCarritoOrden" class="control-label"></label>
+                <select asp-for="IdCarritoOrden" class ="form-control" asp-items="ViewBag.IdCarritoOrden"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="fechapedido" class="control-label"></label>
+                <input asp-for="fechapedido" class="form-control" />
+                <span asp-validation-for="fechapedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="telefono" class="control-label"></label>
+                <input asp-for="telefono" class="form-control" />
+                <span asp-validation-for="telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdMetodoPago" class="control-label"></label>
+                <select asp-for="IdMetodoPago" class ="form-control" asp-items="ViewBag.IdMetodoPago"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPago" class="control-label"></label>
+                <input asp-for="IdPago" class="form-control" />
+                <span asp-validation-for="IdPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

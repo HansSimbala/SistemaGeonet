@@ -9,11 +9,9 @@ namespace SistemaGeonet.Models
     public class CarritoOrden
     {
         [Key]
-        public int IdCarrito { get; set; }
+        public int IdCarritoOrden { get; set; }
 
         public string IdUsuario { get; set; }
-
-        public string nombres { get; set; }
 
         public decimal? precioTotal { get; set; }
 

@@ -1,5 +1,5 @@
-﻿function editQuantity(IdDetalleCarrito, idcantidad) {
-    var cantidad = document.getElementById(idcantidad).value;
+﻿function editQuantity(IdDetalleCarrito) {
+    var cantidad = document.getElementById(IdDetalleCarrito).value;
     $.ajax({
         type: 'POST',
         url: "/DetalleCarritoes/Editar",
