@@ -12,9 +12,10 @@
 }
 
 function ordenarPedido() {
-    var numeroTarjeta = document.getElementById("IdTarjeta").value;
-    var cvv = document.getElementById("IdCvv").value;
-    var FechaVencimiento = document.getElementById("IdFecha").value;
+    var numeroTarjeta = document.getElementById("cardnumber").value.replace(/ /g, "");
+    console.log(numeroTarjeta)
+    var cvv = document.getElementById("securitycode").value;
+    var FechaVencimiento = document.getElementById("expirationdate").value;
     $.ajax({
         type: 'POST',
         url: "/Tarjetas/Agregar",

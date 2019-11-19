@@ -63,9 +63,13 @@ secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):no
     background: #FFF;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
 } */
+/*----------------producto-------------------*/
+.media-body{
+    padding-left: 15px;
+}
 /*----------------contenedor principal-----------------*/
-.principal{
-    padding-left :0px;
+.principal {
+    padding-left: 0px;
     padding-right: 0px;
 }
 /*--------------------------footer..............*/
