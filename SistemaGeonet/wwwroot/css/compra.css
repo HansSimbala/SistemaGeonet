@@ -6,7 +6,6 @@
 }
 
 .info{
-    background: #fff;
     margin:15px;
     padding: 15px;
 }
@@ -58,7 +57,8 @@
     grid-template-rows: 90px 90px 90px;
     grid-template-areas: "name name""number number""expiration security";
     max-width: 400px;
-    margin-top: 3   50px;
+    margin-top: 300px;
+    margin-left: 25px;
     padding: 20px;
     color: #707070;
 }
@@ -66,7 +66,7 @@
     height: 38px;
     position: absolute;
     right: 6px;
-    top: calc(50% - 17px);
+    top: calc(50% - 12px);
     width: 60px;
 }
 
