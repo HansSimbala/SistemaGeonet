@@ -10,48 +10,60 @@
             <div class="col-md-8 clearfix info card" id="checkout">
                 <div class="box">
                     @*<form>*@
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="titulo">Datos del Envio</p>
+                        </div>
+                        <div class="col-sm-6 col-md-12">
+                            <div class="form-group">
+                                <label for="txtDireccion">Dirección</label>
+                                <input type="text" class="form-control"
+                                       placeholder="Ejemplo: calle las ciruelas" id="txtDireccion">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-12">
+                            <div class="form-group">
+                                <label for="txtDireccion">Fecha de Pedido</label>
+                                <input type="date" class="form-control" id="IdFechaEnvio">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="phone">Telefono</label>
+                                <input type="text" class="form-control" id="phone">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="email">E-Mail</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="content">
-
-                        <!-- /.row -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <p class="titulo">Datos Personales</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="firstname">Apellido Paterno</label>
-                                    <input type="text" class="form-control" id="firstname">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="lastname">Apellido Materno</label>
-                                    <input type="text" class="form-control" id="lastname">
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- /.row -->
                         <div class="row">
                             <div class="col-sm-12">
                                 <p class="titulo">Tipo de Pago</p>
                             </div>
                         </div>
-                        <div>Seleccione método de pago</div>
+                        <div>Seleccionar...</div>
                         <div class="form-group">
                             <select id="IdMetodoPago" class="form-control" onchange="getPago()">
                                 <option value="0" style="display: none;">Seleccione Metodo Pago</option>
                                 <option value="1">Tarjeta</option>
                                 <option value="2">Voucher</option>
                             </select>
+                            <div id="message"></div>
                         </div>
                         <div class="row" id="Tarjeta" style="display: none;">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Número de Tarjeta</label>
-                                    <input type="text" class="form-control" placeholder="Ejemplo: 4557 8805 ......." id="IdTarjeta">
+                                    <input type="text" class="form-control" id="IdTarjeta">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -72,50 +84,9 @@
                                 <div class="col-sm-6 col-md-12 center-block">
                                     <label for="txtNroTarjeta">Ingrese la foto del Voucher</label>
                                     <br />
-                                    <input type="file" id="idFoto">
+                                    <input type="file" id="idFoto" accept="image/*">
                                 </div>
                             </div>
-                        </div>
-                        <!-- /.row -->
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <p class="titulo">Datos del Envio</p>
-                            </div>
-                            <div class="col-sm-6 col-md-12">
-                                <div class="form-group">
-                                    <label for="txtDireccion">Dirección</label>
-                                    <input type="text" class="form-control"
-                                           placeholder="Ejemplo: calle las ciruelas" id="txtDireccion">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-
-                                    <label for="txtDistrito">Distrito</label>
-                                    <select class="form-control" id="txtDistrito">
-                                        <option value="germany">Comas</option>
-                                        <option value="austria">Puente Piedra</option>
-                                        <option value="swiss">Los Olivos</option>
-                                        <option value="usa">San Martin de Porres</option>
-                                        <option value="usa">Surco</option>
-                                        <option value="usa">Miraflores</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="phone">Telefono</label>
-                                    <input type="text" class="form-control" id="phone">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">E-Mail</label>
-                                    <input type="email" class="form-control" id="email">
-                                </div>
-                            </div>
-
                         </div>
 
                         <!-- /.row -->
@@ -129,8 +100,8 @@
 
                         <!-- /.row -->
                         @*<div class="form-group">
-            <button type="button" class="btn btn-warning float-right"><b />Ordenar</button>
-        </div>*@
+                <button type="button" class="btn btn-warning float-right"><b />Ordenar</button>
+            </div>*@
 
                     </div>
                     @*</form>*@

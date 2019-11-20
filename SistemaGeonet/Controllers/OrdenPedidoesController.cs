@@ -47,7 +47,7 @@ namespace SistemaGeonet.Controllers
         }
 
         // GET: OrdenPedidoes/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             ViewData["IdCarritoOrden"] = new SelectList(_context.Set<CarritoOrden>(), "IdCarritoOrden", "IdCarritoOrden");
             ViewData["IdMetodoPago"] = new SelectList(_context.Set<MetodoPago>(), "IdMetodoPago", "IdMetodoPago");
@@ -70,6 +70,26 @@ namespace SistemaGeonet.Controllers
             ViewData["IdCarritoOrden"] = new SelectList(_context.Set<CarritoOrden>(), "IdCarritoOrden", "IdCarritoOrden", ordenPedido.IdCarritoOrden);
             ViewData["IdMetodoPago"] = new SelectList(_context.Set<MetodoPago>(), "IdMetodoPago", "IdMetodoPago", ordenPedido.IdMetodoPago);
             return View(ordenPedido);
+        }
+
+        // POST: OrdenPedidoes/Agregar
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public async Task<string> Agregar(int IdCarritoOrden, DateTime fechapedido, string direccion, string telefono, string email, int IdMetodoPago, int IdPago, OrdenPedido ordenPedido)
+        {
+            ordenPedido = new OrdenPedido {
+                IdCarritoOrden = IdCarritoOrden,
+                fechapedido = fechapedido,
+                direccion=direccion,
+                telefono = telefono,
+                email = email,
+                IdMetodoPago = IdMetodoPago, 
+                IdPago = IdPago
+            };
+            _context.Add(ordenPedido);
+            await _context.SaveChangesAsync();
+            return "Success";
         }
 
         // GET: OrdenPedidoes/Edit/5
