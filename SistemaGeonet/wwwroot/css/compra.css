@@ -58,7 +58,7 @@
     grid-template-rows: 90px 90px 90px;
     grid-template-areas: "name name""number number""expiration security";
     max-width: 400px;
-    margin-top: 250px;
+    margin-top: 3   50px;
     padding: 20px;
     color: #707070;
 }
@@ -90,6 +90,7 @@
 
 .creditcard svg#cardfront,
 .creditcard svg#cardback {
+    margin: 25px;
     width: 100%;
     -webkit-box-shadow: 1px 5px 6px 0px black;
     box-shadow: 1px 5px 6px 0px black;
