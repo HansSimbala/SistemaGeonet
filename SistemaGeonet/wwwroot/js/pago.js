@@ -22,9 +22,9 @@ function ordenarPedido() {
     console.log("metodo"+IdMetodoPago);
 
     if (IdMetodoPago == 1) {
-        var numeroTarjeta = document.getElementById("IdTarjeta").value;
-        var cvv = document.getElementById("IdCvv").value;
-        var FechaVencimiento = document.getElementById("IdFecha").value;
+        var numeroTarjeta = document.getElementById("cardnumber").value;
+        var cvv = document.getElementById("securitycode").value;
+        var FechaVencimiento = document.getElementById("expirationdate").value;
         $.ajax({
             type: 'POST',
             url: "/Tarjetas/Agregar",
