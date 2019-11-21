@@ -44,5 +44,7 @@ namespace SistemaGeonet.Data
         public DbSet<SistemaGeonet.Models.Tarjeta> Tarjeta { get; set; }
 
         public DbSet<SistemaGeonet.Models.Voucher> Voucher { get; set; }
+
+        public DbSet<SistemaGeonet.Models.CarritoOrden> CarritoOrden { get; set; }
     }
 }

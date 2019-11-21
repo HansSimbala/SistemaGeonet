@@ -1,4 +1,4 @@
-﻿$(document).ready(function ($) {
+﻿$(document).ready(function () {
 
     const name = document.getElementById('name');
     const cardnumber = document.getElementById('cardnumber');

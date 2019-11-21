@@ -109,6 +109,37 @@ namespace SistemaGeonet.Controllers
             return View(detalleCarrito);
         }
 
+
+        // POST: DetalleCarritoes/EditarCarrito/
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public async Task<string> EditarCarrito(int IdCarrito, int IdCarritoOrden)
+        {
+            List<DetalleCarrito> list = new List<DetalleCarrito>();
+            var applicationDbContext = _context.DetalleCarrito.Include(d => d.equipo);
+            List<DetalleCarrito> listDetalles = await applicationDbContext.ToListAsync();
+            bool a = false;
+            a = listDetalles[0].IdCarrito == 2;
+
+            for (int i = 0; i < listDetalles.Count; i++)
+            {
+                if (listDetalles[i].IdCarrito==IdCarrito)
+                {
+                    list.Add(listDetalles[i]);
+                }
+            }
+
+            for (int j = 0; j < list.Count; j++)
+            {
+                list[j].IdCarrito = IdCarritoOrden;
+                list[j].hasOrden = 1;
+                _context.Update(list[j]);
+                await _context.SaveChangesAsync();
+            }
+            return "success";
+        }
+
         // POST: DetalleCarritoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

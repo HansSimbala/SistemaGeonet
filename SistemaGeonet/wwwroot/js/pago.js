@@ -12,7 +12,12 @@
 }
 
 function ordenarPedido() {
-    var IdCarritoOrden = 3;
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    console.log(id);
+    var IdCarritoOrden = id;
     var IdPago = 0;
     var fechapedido = document.getElementById("IdFechaEnvio").value;
     var direccion = document.getElementById("IdDireccion").value;;
@@ -48,6 +53,15 @@ function ordenarPedido() {
                         IdPago
                     },
                     success: function (response) {
+                        Swal.fire(
+                            'Pago Realizado',
+                            'Transacción exitosa',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                window.location.replace("../OrdenPedidoes/Index");
+                            }
+                        })
                         console.log(response);
                     },
                 });
@@ -79,14 +93,23 @@ function ordenarPedido() {
                         IdPago
                     },
                     success: function (response) {
+                        Swal.fire(
+                            'Solicitud enviada',
+                            'Validar la transacción con el proveedor.',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                window.location.replace("../OrdenPedidoes/Index");
+                            }
+                        })
                         console.log(response);
                     },
                 });
             },
         });
     } else {
-        document.getElementById("message").innerHTML = "Seleccionar un método de pago.";
-        document.getElementById("message").style.color = "#ff0000";
+        //document.getElementById("message").innerHTML = "Seleccionar un método de pago.";
+        //document.getElementById("message").style.color = "#ff0000";
         return;
     }
 }
