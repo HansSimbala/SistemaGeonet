@@ -108,8 +108,8 @@ function ordenarPedido() {
             },
         });
     } else {
-        //document.getElementById("message").innerHTML = "Seleccionar un método de pago.";
-        //document.getElementById("message").style.color = "#ff0000";
+        document.getElementById("message").innerHTML = "Seleccionar un método de pago.";
+        document.getElementById("message").style.color = "#ff0000";
         return;
     }
 }
