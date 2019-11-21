@@ -52,7 +52,7 @@
                                     <small class="text-muted">(USD5 C/U)</small>
                                 </div> <!-- price-wrap .// -->
                             </td>
-                            <td class="text-right">
+                            <td class="text-right" onclick="FuntionDecreciente()">
                                 <button type="button" onclick="eliminar(@item.IdDetalleCarrito)" class="btn btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </td>
                         </tr>
@@ -99,7 +99,7 @@
                 </span>
                 <span id="sc-subtotal-amount-buybox" class="a-color-price sc-price-container a-text-bold">
                     <span class="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
-                        USD 
+                        USD
                     </span>
                 </span>
             </div>
@@ -114,7 +114,8 @@
     }
 
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="~/js/main.js"></script>
 <script src="~/js/delete.js"></script>
 <script src="~/js/edit.js"></script>
 <script src="~/js/crearorden.js"></script>

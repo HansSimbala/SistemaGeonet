@@ -15,10 +15,11 @@
         <link rel="stylesheet" href="~/css/detalle.css">
         <link rel="stylesheet" href="~/css/index.css">
         <link rel="stylesheet" href="~/css/compra.css">
-       <link rel="stylesheet" href="~/package/dist/sweetalert2.min.css">
+        <link rel="stylesheet" href="~/package/dist/sweetalert2.min.css">
         <script src="~/js/fontawesome.min.js"></script>
         <script src="~/js/solid.min.js">
         </script>
+        <script src="~/js/main.js"></script>
         <script src="~/js/brands.min.js"></script>
     </environment>
     <environment exclude="Development">
@@ -55,7 +56,7 @@
             </ul>
             <ul class="navbar-nav ml-auto menu">
                 <li class="nav-item">
-                    <a asp-controller="Carritoes" asp-action="index" class="nav-link"> <i class="fas fa-shopping-cart"></i> MI CARRITO</a>
+                    <a asp-controller="Carritoes" asp-action="index" class="nav-link"> <span>0</span> <i class="fas fa-shopping-cart"></i> MI CARRITO</a>
                 </li>
                 @await Html.PartialAsync("_LoginPartial")
             </ul>
