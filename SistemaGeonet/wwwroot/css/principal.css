@@ -144,7 +144,14 @@ secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):no
     color: #eba630;
     transition: .5s all ease;
 }
-
+.fa-cc-paypal, 
+.fa-cc-diners-club, 
+.fa-cc-visa, 
+.fa-cc-mastercard, 
+.fa-cc-amex {
+    color: #fff;
+    font-size: 20px;
+}
 
 @media (max-width:767px) {
     #footer h5 {

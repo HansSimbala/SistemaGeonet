@@ -16,7 +16,7 @@ body{
 }
 .menuprofile li:hover{
     border-right: 8px solid #eba630;
-    font-size: 18px;
+    font-size: 17px;
     transition: all 0.1s ease-in;
 }
 .menuprofile li a:hover{
@@ -33,12 +33,28 @@ body{
     position: absolute;
     right: 0%;
 }
-
-
-
+.titulo{
+    font-size: 30px;
+}
 .fa-times {
     color: #fff;
     font-size: 30px;
 }
 
-.btnClose:focus {outline:0;}
+.btnClose:focus {
+    outline: 0;
+}
+/*---------------cambiar contraseña diseño--------------*/
+.btnActualizar{
+    background:#080954;
+    color : #fff;
+}
+    .btnActualizar:hover {
+        border: 2px solid #080954;
+        background: #fff;
+        color: #080954;
+        transition-property: all;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in;
+    }
+
