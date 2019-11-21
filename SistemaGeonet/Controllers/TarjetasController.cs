@@ -49,6 +49,24 @@ namespace SistemaGeonet.Controllers
             return View();
         }
 
+        // POST: Tarjetas/Agregar
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public async Task<int> Agregar(string numeroTarjeta, int cvv, string FechaVencimiento, Tarjeta tarjeta)
+        {
+            tarjeta = new Tarjeta
+            {
+                numeroTarjeta = numeroTarjeta,
+                cvv = cvv,
+                FechaVencimiento = FechaVencimiento
+
+            };
+            _context.Add(tarjeta);
+            await _context.SaveChangesAsync();
+            return tarjeta.IdTarjeta;
+        }
+
         // POST: Tarjetas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -63,24 +81,6 @@ namespace SistemaGeonet.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(tarjeta);
-        }
-
-        // POST: Tarjetas/Agregar
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public async Task<int> Agregar(int numeroTarjeta, int cvv, string FechaVencimiento, Tarjeta tarjeta)
-        {
-            tarjeta = new Tarjeta
-            {
-                numeroTarjeta = numeroTarjeta,
-                cvv = cvv,
-                FechaVencimiento= FechaVencimiento
-                
-            };
-            _context.Add(tarjeta);
-            await _context.SaveChangesAsync();
-            return tarjeta.IdTarjeta;
         }
 
         // GET: Tarjetas/Edit/5
