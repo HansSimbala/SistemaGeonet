@@ -25,6 +25,7 @@ namespace SistemaGeonet.Controllers
         // GET: CarritoOrdens
         public async Task<IActionResult> Index()
         {
+            List<DetalleCarrito> listDetalles = _context.Set<DetalleCarrito>().Include(s => s.equipo).ToList();
             return View(await _context.CarritoOrden.ToListAsync());
         }
 
