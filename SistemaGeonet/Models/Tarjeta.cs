@@ -11,7 +11,7 @@ namespace SistemaGeonet.Models
         [Key]
         public int IdTarjeta { get; set; }
 
-        public int numeroTarjeta { get; set; }
+        public string numeroTarjeta { get; set; }
 
         public int cvv { get; set; }
 

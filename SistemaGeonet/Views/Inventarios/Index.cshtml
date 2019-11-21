@@ -70,6 +70,11 @@
                                     <li id="idcant" value="1" hidden></li>
                                     <li><a onclick="agregarCarrito(@Html.DisplayFor(modelItem => item.Equipo.idEquipo), 'idcant')"><i class="fas fa-shopping-cart"></i></a></li>
                                 }
+                                else
+                                {
+                                    <li value="1" hidden></li>
+                                    <li><a onclick="agregarCarritoLS(@Html.DisplayFor(modelItem => item.Equipo.idEquipo))"><i class="fas fa-shopping-cart"></i></a></li>
+                                }
                             </ul>
                             <span class="product-new-label">Oferta</span>
                         </div>

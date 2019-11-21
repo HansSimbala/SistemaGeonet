@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<SistemaGeonet.Models.Carrito>
-@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <div class="card">
     <table class="table table-hover shopping-cart-wrap">
@@ -16,73 +18,104 @@
                 <th scope="col" width="200" class="text-right">Acción</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var item in ViewData["listaDetalleCarrito"] as IEnumerable<SistemaGeonet.Models.DetalleCarrito>)
+        <tbody id="IdOrden">
+            @if (SignInManager.IsSignedIn(User))
             {
-
-                if (item.IdCarrito == (ViewBag.idcarrito))
+                @foreach (var item in ViewData["listaDetalleCarrito"] as IEnumerable<SistemaGeonet.Models.DetalleCarrito>)
                 {
-                    <tr>
-                        <td>
-                            <figure class="media">
-                                <div class="img-wrap"><img src="~/images/@item.equipo.imagen_catalogo" class="img-thumbnail img-sm" width="150px" height="150px"></div>
-                                <figcaption class="media-body">
-                                    <h6 class="title text-truncate"><strong>@item.equipo.nombre </strong></h6>
-                                    <dl class="param param-inline small">
-                                        <dt>Marca: </dt>
-                                        <dd>@item.equipo.marca</dd>
-                                    </dl>
-                                    <dl class="param param-inline small">
-                                        <dt>Descripción: </dt>
-                                        <dd>@item.equipo.numero_serie</dd>
-                                    </dl>
-                                </figcaption>
-                            </figure>
-                        </td>
-                        <td>
-                            <input type="number" id="@item.IdDetalleCarrito" value="@item.cantidad" class="form-control input-number  text-center" onchange="editQuantity(@item.IdDetalleCarrito)" />
-                        </td>
-                        <td>
-                            <div class="price-wrap">
-                                <var class="price">USD @item.equipo.precio</var>
-                                <small class="text-muted">(USD5 C/U)</small>
-                            </div> <!-- price-wrap .// -->
-                        </td>
-                        <td class="text-right">
-                            <button type="button" onclick="eliminar(@item.IdDetalleCarrito)" class="btn btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        </td>
-                    </tr>
+
+                    if (item.IdCarrito == (ViewBag.idcarrito))
+                    {
+                        <tr>
+                            <td>
+                                <figure class="media">
+                                    <div class="img-wrap"><img src="~/images/@item.equipo.imagen_catalogo" class="img-thumbnail img-sm" width="150px" height="150px"></div>
+                                    <figcaption class="media-body">
+                                        <h6 class="title text-truncate"><strong>@item.equipo.nombre </strong></h6>
+                                        <dl class="param param-inline small">
+                                            <dt>Marca: </dt>
+                                            <dd>@item.equipo.marca</dd>
+                                        </dl>
+                                        <dl class="param param-inline small">
+                                            <dt>Descripción: </dt>
+                                            <dd>@item.equipo.numero_serie</dd>
+                                        </dl>
+                                    </figcaption>
+                                </figure>
+                            </td>
+                            <td>
+                                <input type="number" id="@item.IdDetalleCarrito" value="@item.cantidad" class="form-control input-number  text-center" onchange="editQuantity(@item.IdDetalleCarrito)" />
+                            </td>
+                            <td>
+                                <div class="price-wrap">
+                                    <var class="price">USD @item.equipo.precio</var>
+                                    <small class="text-muted">(USD5 C/U)</small>
+                                </div> <!-- price-wrap .// -->
+                            </td>
+                            <td class="text-right">
+                                <button type="button" onclick="eliminar(@item.IdDetalleCarrito)" class="btn btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    }
+
                 }
 
             }
         </tbody>
     </table>
-    @foreach (var item in Model)
+    @if (SignInManager.IsSignedIn(User))
     {
-        if (item.IdUsuario == UserManager.GetUserId(User))
+        @foreach (var item in Model)
         {
-            <div class="agrupar text-right">
-                <div data-name="Subtotals" class="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
-                    <span id="sc-subtotal-label-buybox" class="a-size-medium sc-number-of-items">
-                        Subtotal:
-                    </span>
-                    <span id="sc-subtotal-amount-buybox" class="a-color-price sc-price-container a-text-bold">
-                        <span class="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
-                            USD @Html.DisplayFor(modelItem => item.subTotal)
+            if (item.IdUsuario == UserManager.GetUserId(User))
+            {
+                <div class="agrupar text-right">
+                    <div data-name="Subtotals" class="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
+                        <span id="sc-subtotal-label-buybox" class="a-size-medium sc-number-of-items">
+                            Subtotal:
                         </span>
-                    </span>
+                        <span id="sc-subtotal-amount-buybox" class="a-color-price sc-price-container a-text-bold">
+                            <span class="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
+                                USD @Html.DisplayFor(modelItem => item.subTotal)
+                            </span>
+                        </span>
+                    </div>
+                    <br />
+                    <div class="text-right">
+                        <a onclick="createOrden(@item.IdCarrito)" class="btn btn-primary">
+                            Proceder al pago
+                        </a>
+                    </div>
                 </div>
-                <br />
-                <td class="text-right">
-                    <a asp-controller="ordenpedidoes" asp-action="create" class="btn btn-primary">
-                        Proceder al pago
-                    </a>
-                </td>
-            </div>
+            }
         }
+    }
+    else
+    {
+        <div class="agrupar text-right">
+            <div data-name="Subtotals" class="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
+                <span id="sc-subtotal-label-buybox" class="a-size-medium sc-number-of-items">
+                    Subtotal:
+                </span>
+                <span id="sc-subtotal-amount-buybox" class="a-color-price sc-price-container a-text-bold">
+                    <span class="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
+                        USD 
+                    </span>
+                </span>
+            </div>
+            <br />
+            <div class="text-right">
+                <a asp-controller="Account" asp-action="Login" class="btn btn-primary">
+                    Proceder al pago
+                </a>
+            </div>
+        </div>
+
     }
 
 </div>
 
 <script src="~/js/delete.js"></script>
 <script src="~/js/edit.js"></script>
+<script src="~/js/crearorden.js"></script>
+<script src="~/js/equiposls.js"></script>

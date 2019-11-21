@@ -17,7 +17,7 @@ namespace SistemaGeonet.Models
 
         public int idEquipo { get; set; }
 
-        public int idUsuario { get; set; }
+        public string idUsuario { get; set; }
 
         public Equipo equipo { get; set; }
     }

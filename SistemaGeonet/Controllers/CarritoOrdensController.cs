@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,22 +11,24 @@ using SistemaGeonet.Models;
 
 namespace SistemaGeonet.Controllers
 {
-    public class TarjetasController : Controller
+    public class CarritoOrdensController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TarjetasController(ApplicationDbContext context)
+        public CarritoOrdensController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Tarjetas
+        // GET: CarritoOrdens
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tarjeta.ToListAsync());
+            return View(await _context.CarritoOrden.ToListAsync());
         }
 
-        // GET: Tarjetas/Details/5
+        // GET: CarritoOrdens/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,57 +36,56 @@ namespace SistemaGeonet.Controllers
                 return NotFound();
             }
 
-            var tarjeta = await _context.Tarjeta
-                .SingleOrDefaultAsync(m => m.IdTarjeta == id);
-            if (tarjeta == null)
+            var carritoOrden = await _context.CarritoOrden
+                .SingleOrDefaultAsync(m => m.IdCarritoOrden == id);
+            if (carritoOrden == null)
             {
                 return NotFound();
             }
 
-            return View(tarjeta);
+            return View(carritoOrden);
         }
 
-        // GET: Tarjetas/Create
+        // GET: CarritoOrdens/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tarjetas/Agregar
+        // POST: CarritoOrdens/CrearCarritoOrden
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<int> Agregar(string numeroTarjeta, int cvv, string FechaVencimiento, Tarjeta tarjeta)
+        public async Task<int> CrearCarritoOrden(string IdUsuario, decimal precioTotal, string estado, CarritoOrden carritoOrden)
         {
-            tarjeta = new Tarjeta
-            {
-                numeroTarjeta = numeroTarjeta,
-                cvv = cvv,
-                FechaVencimiento = FechaVencimiento
-
+            IdUsuario = _userManager.GetUserId(User);
+            carritoOrden = new CarritoOrden {
+                IdUsuario = IdUsuario,
+                precioTotal = precioTotal,
+                estado = estado
             };
-            _context.Add(tarjeta);
+            _context.Add(carritoOrden);
             await _context.SaveChangesAsync();
-            return tarjeta.IdTarjeta;
+            return carritoOrden.IdCarritoOrden;
         }
 
-        // POST: Tarjetas/Create
+        // POST: CarritoOrdens/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTarjeta,numeroTarjeta,cvv,FechaVencimiento")] Tarjeta tarjeta)
+        public async Task<IActionResult> Create([Bind("IdCarritoOrden,IdUsuario,precioTotal,estado")] CarritoOrden carritoOrden)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tarjeta);
+                _context.Add(carritoOrden);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarjeta);
+            return View(carritoOrden);
         }
 
-        // GET: Tarjetas/Edit/5
+        // GET: CarritoOrdens/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,22 +93,22 @@ namespace SistemaGeonet.Controllers
                 return NotFound();
             }
 
-            var tarjeta = await _context.Tarjeta.SingleOrDefaultAsync(m => m.IdTarjeta == id);
-            if (tarjeta == null)
+            var carritoOrden = await _context.CarritoOrden.SingleOrDefaultAsync(m => m.IdCarritoOrden == id);
+            if (carritoOrden == null)
             {
                 return NotFound();
             }
-            return View(tarjeta);
+            return View(carritoOrden);
         }
 
-        // POST: Tarjetas/Edit/5
+        // POST: CarritoOrdens/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTarjeta,numeroTarjeta,cvv,FechaVencimiento")] Tarjeta tarjeta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCarritoOrden,IdUsuario,precioTotal,estado")] CarritoOrden carritoOrden)
         {
-            if (id != tarjeta.IdTarjeta)
+            if (id != carritoOrden.IdCarritoOrden)
             {
                 return NotFound();
             }
@@ -115,12 +117,12 @@ namespace SistemaGeonet.Controllers
             {
                 try
                 {
-                    _context.Update(tarjeta);
+                    _context.Update(carritoOrden);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarjetaExists(tarjeta.IdTarjeta))
+                    if (!CarritoOrdenExists(carritoOrden.IdCarritoOrden))
                     {
                         return NotFound();
                     }
@@ -131,10 +133,10 @@ namespace SistemaGeonet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarjeta);
+            return View(carritoOrden);
         }
 
-        // GET: Tarjetas/Delete/5
+        // GET: CarritoOrdens/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,30 +144,30 @@ namespace SistemaGeonet.Controllers
                 return NotFound();
             }
 
-            var tarjeta = await _context.Tarjeta
-                .SingleOrDefaultAsync(m => m.IdTarjeta == id);
-            if (tarjeta == null)
+            var carritoOrden = await _context.CarritoOrden
+                .SingleOrDefaultAsync(m => m.IdCarritoOrden == id);
+            if (carritoOrden == null)
             {
                 return NotFound();
             }
 
-            return View(tarjeta);
+            return View(carritoOrden);
         }
 
-        // POST: Tarjetas/Delete/5
+        // POST: CarritoOrdens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tarjeta = await _context.Tarjeta.SingleOrDefaultAsync(m => m.IdTarjeta == id);
-            _context.Tarjeta.Remove(tarjeta);
+            var carritoOrden = await _context.CarritoOrden.SingleOrDefaultAsync(m => m.IdCarritoOrden == id);
+            _context.CarritoOrden.Remove(carritoOrden);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TarjetaExists(int id)
+        private bool CarritoOrdenExists(int id)
         {
-            return _context.Tarjeta.Any(e => e.IdTarjeta == id);
+            return _context.CarritoOrden.Any(e => e.IdCarritoOrden == id);
         }
     }
 }

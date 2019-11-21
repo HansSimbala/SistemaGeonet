@@ -12,12 +12,17 @@
 }
 
 function ordenarPedido() {
-    var IdCarritoOrden;
-    var IdPago;
-    var fechapedido;
-    var direccion;
-    var telefono;
-    var email;
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    console.log(id);
+    var IdCarritoOrden = id;
+    var IdPago = 0;
+    var fechapedido = document.getElementById("IdFechaEnvio").value;
+    var direccion = document.getElementById("IdDireccion").value;;
+    var telefono = document.getElementById("IdTelefono").value;;
+    var email = document.getElementById("IdCorreo").value;;
     var IdMetodoPago = document.getElementById("IdMetodoPago").value;
     console.log("metodo"+IdMetodoPago);
 
@@ -34,8 +39,32 @@ function ordenarPedido() {
                 FechaVencimiento
             },
             success: function (response) {
-                console.log("idtarjeta" + response);
                 IdPago = response;
+                $.ajax({
+                    type: 'POST',
+                    url: "/OrdenPedidoes/Agregar",
+                    data: {
+                        IdCarritoOrden,
+                        fechapedido,
+                        direccion,
+                        telefono,
+                        email,
+                        IdMetodoPago,
+                        IdPago
+                    },
+                    success: function (response) {
+                        Swal.fire(
+                            'Pago Realizado',
+                            'Transacción exitosa',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                window.location.replace("../OrdenPedidoes/Index");
+                            }
+                        })
+                        console.log(response);
+                    },
+                });
             },
         });
     }
@@ -50,29 +79,37 @@ function ordenarPedido() {
                 foto
             },
             success: function (response) {
-                console.log("idvoucher" + response);
                 IdPago = response;
+                $.ajax({
+                    type: 'POST',
+                    url: "/OrdenPedidoes/Agregar",
+                    data: {
+                        IdCarritoOrden,
+                        fechapedido,
+                        direccion,
+                        telefono,
+                        email,
+                        IdMetodoPago,
+                        IdPago
+                    },
+                    success: function (response) {
+                        Swal.fire(
+                            'Solicitud enviada',
+                            'Validar la transacción con el proveedor.',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                window.location.replace("../OrdenPedidoes/Index");
+                            }
+                        })
+                        console.log(response);
+                    },
+                });
             },
         });
     } else {
-        document.getElementById("message").innerHTML = "Seleccionar un método de pago.";
-        document.getElementById("message").style.color = "#ff0000";
+        //document.getElementById("message").innerHTML = "Seleccionar un método de pago.";
+        //document.getElementById("message").style.color = "#ff0000";
         return;
     }
-    $.ajax({
-        type: 'POST',
-        url: "/OrdenPedidoes/Agregar",
-        data: {
-            IdCarritoOrden,
-            fechapedido,
-            direccion,
-            telefono,
-            email,
-            IdMetodoPago,
-            IdPago
-        },
-        success: function (response) {
-            console.log(response);
-        },
-    });
 }
