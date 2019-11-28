@@ -11,34 +11,37 @@ using SistemaGeonet.Models;
 
 namespace SistemaGeonet.Controllers
 {
-    public class CarritoOrdensController : Controller
+    public class CarritoOrdens1Controller : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CarritoOrdensController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public CarritoOrdens1Controller(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        // GET: CarritoOrdens
-        public async Task<IActionResult> Index()
+        // GET: CarritoOrdens1
+        public async Task<IActionResult> Index(int? id)
         {
             var userId = _userManager.GetUserId(User);
             ViewData["idusuario"] = userId;
-            if (userId != null)
-            {
-                var tCarrito = await _context.CarritoOrden.SingleOrDefaultAsync(m => m.IdUsuario == userId);
-                var idCarrito = tCarrito.IdCarritoOrden;
-                ViewData["idcarritoOrden"] = idCarrito;
-            }
+
             List<DetalleCarrito> listDetalles = _context.Set<DetalleCarrito>().Include(s => s.equipo).ToList();
-            ViewData["listaDetalleCarrito"] = listDetalles;
+            List<DetalleCarrito> listCarrito = new List<DetalleCarrito>();
+            for (int i = 0; i < listDetalles.Count; i++)
+            {
+                if (listDetalles[i].IdCarrito == id) {
+                    listCarrito.Add(listDetalles[i]);
+                }
+
+            }
+            ViewData["listaDetalleCarrito"] = listCarrito;
             return View(await _context.CarritoOrden.ToListAsync());
         }
 
-        // GET: CarritoOrdens/Details/5
+        // GET: CarritoOrdens1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -56,30 +59,13 @@ namespace SistemaGeonet.Controllers
             return View(carritoOrden);
         }
 
-        // GET: CarritoOrdens/Create
+        // GET: CarritoOrdens1/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CarritoOrdens/CrearCarritoOrden
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public async Task<int> CrearCarritoOrden(string IdUsuario, decimal precioTotal, string estado, CarritoOrden carritoOrden)
-        {
-            IdUsuario = _userManager.GetUserId(User);
-            carritoOrden = new CarritoOrden {
-                IdUsuario = IdUsuario,
-                precioTotal = precioTotal,
-                estado = estado
-            };
-            _context.Add(carritoOrden);
-            await _context.SaveChangesAsync();
-            return carritoOrden.IdCarritoOrden;
-        }
-
-        // POST: CarritoOrdens/Create
+        // POST: CarritoOrdens1/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -95,7 +81,7 @@ namespace SistemaGeonet.Controllers
             return View(carritoOrden);
         }
 
-        // GET: CarritoOrdens/Edit/5
+        // GET: CarritoOrdens1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -111,7 +97,7 @@ namespace SistemaGeonet.Controllers
             return View(carritoOrden);
         }
 
-        // POST: CarritoOrdens/Edit/5
+        // POST: CarritoOrdens1/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -146,7 +132,7 @@ namespace SistemaGeonet.Controllers
             return View(carritoOrden);
         }
 
-        // GET: CarritoOrdens/Delete/5
+        // GET: CarritoOrdens1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -164,7 +150,7 @@ namespace SistemaGeonet.Controllers
             return View(carritoOrden);
         }
 
-        // POST: CarritoOrdens/Delete/5
+        // POST: CarritoOrdens1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

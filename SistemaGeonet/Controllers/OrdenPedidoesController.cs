@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,17 +14,28 @@ namespace SistemaGeonet.Controllers
     public class OrdenPedidoesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrdenPedidoesController(ApplicationDbContext context)
+        public OrdenPedidoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: OrdenPedidoes
         public async Task<IActionResult> Index()
         {
+            var userId = _userManager.GetUserId(User);
             var applicationDbContext = _context.OrdenPedido.Include(o => o.carritoOrden).Include(o => o.metodoPago);
-            return View(await applicationDbContext.ToListAsync());
+            List<OrdenPedido> ordenPedidos = await applicationDbContext.ToListAsync();
+            List<OrdenPedido> ordenPedidosNew = new List<OrdenPedido>();
+            for (int i = 0; i < ordenPedidos.Count;i++)
+            {
+                if (ordenPedidos[i].carritoOrden.IdUsuario == userId) {
+                    ordenPedidosNew.Add(ordenPedidos[i]);
+                }    
+            }
+            return View(ordenPedidosNew);
         }
 
         // GET: OrdenPedidoes/Details/5
