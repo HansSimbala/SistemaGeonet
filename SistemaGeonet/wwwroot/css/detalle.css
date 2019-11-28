@@ -72,11 +72,11 @@ img {
   animation-duration: .3s;
 }
 
-.card {
-  margin-top: 50px;
-  background: #eee;
-  /*padding: 3em;*/
-  line-height: 1.5em;
+.card-productoc {
+    margin: 50px;
+    background: #eee;
+    padding: 2em;
+    line-height: 1.5em;
 }
 
 @media screen and (min-width: 997px) {
@@ -189,3 +189,24 @@ img {
 .contenido {
   padding: 45px 0px;
 }
+
+.btnCheckout {
+    max-width: 160px;
+    font-size: 18px;
+    width: 100%;
+    background: #080954;
+    color: #fff !important;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+    .btnCheckout:hover {
+        border: 2px solid #080954;
+        background: #fff;
+        color: #080954 !important;
+        transition-property: all;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in;
+    }

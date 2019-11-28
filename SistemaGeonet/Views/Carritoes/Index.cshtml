@@ -8,8 +8,8 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<div class="card">
-    <table class="table table-hover shopping-cart-wrap">
+<div class="card-productoc">
+    <table class="table table-hover detalle-carrito shopping-cart-wrap">
         <thead class="text-muted">
             <tr>
                 <th scope="col">Equipo</th>
@@ -82,7 +82,7 @@
                     </div>
                     <br />
                     <div class="text-right">
-                        <a onclick="createOrden(@item.IdCarrito)" class="btn btn-primary">
+                        <a onclick="createOrden(@item.IdCarrito)" class="btn btn-primary btnCheckout">
                             Proceder al pago
                         </a>
                     </div>
