@@ -213,3 +213,17 @@ body {
         transform: rotate(500deg);
     }
 }
+
+/*.numCarrito {
+    background: #fff;
+    color: #080954;
+    border-radius: 25%;
+    position: absolute;
+    top: 2px;
+    font-size: 18px;
+    font-weight:800;
+    line-height: 20px;
+    text-align: center;
+    padding: 0 2px;
+
+}*/
